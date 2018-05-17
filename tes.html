@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title>Push button, send message</title>
+      <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+      -->
+      <script src="paho-mqtt.js" type="text/javascript"></script>
+	  </head>
+  <body>
+  
+    <p id="p1"> Hello World! </p>
+    <script type="text/javascript">
+    
+    
+      var server_uri = ["ws://iot.eclipse.org:80/ws"];
+      var port = [80];
+      var clientID = "ID-" + Math.round(Math.random() * 1000);
+      //var client = new Paho.MQTT.Client();
+      var client = new Paho.MQTT.Client("iot.eclipse.org", 80, clientID);
+      client.onMessageArrived = onMessageArrived;
+      client.onConnectionLost = onConnectLoss;
+      
+      var options = {
+        onSuccess:onConnect,
+        hosts:server_uri,
+        uris:server_uri,
+        ports:port,
+        reconnect:true,
+      }
+      
+      client.connect(options);
+      
+      
+      function onConnectLoss(){
+        console.log("Connection lost... Reconnecting");
+        
+      
+      
+      }
+
+      function onConnect() {
+ 
+        console.log("connected");
+        client.subscribe("sensors/suh");
+        //message = new Paho.MQTT.Message("Hello");
+        //message.destinationName = "World";
+        //client.send(message);
+      }
+      
+      function onMessageArrived(message) {
+        console.log("onMessageArrived:"+message.payloadString);
+        document.getElementById("p1").innerHTML = message.payloadString;
+        }
+
+
+    </script>
+
+  </body>
+</html>
