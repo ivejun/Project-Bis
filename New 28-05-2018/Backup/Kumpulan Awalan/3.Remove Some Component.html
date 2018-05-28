@@ -1,0 +1,95 @@
+<html>
+<head>
+    <title>Push button, send message</title>
+    <script src="paho-mqtt.js" type="text/javascript"></script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<p id="p1"> Look Your Status Here Bro </p>
+<p id="p2"> another Print </p>
+
+<div id="map"></div>
+<script type="text/javascript">
+    //Setting For Global Variable
+    var a = {lat: -7.9553267, lng: 112.6109537};
+    //iconbase
+    var iconBase = 'https://indodjaja.com/wp-content/uploads/2018/05/bus.png';
+    var server_uri = ["ws://iot.eclipse.org:80/ws"];
+    var port = [80];
+    var clientID = "ID-" + Math.round(Math.random() * 1000);
+    var client = new Paho.MQTT.Client("iot.eclipse.org", 80, clientID);
+
+    // Init Map + MQTT INIT
+    function initMap() {
+        client.onMessageArrived = onMessageArrived;
+        client.onConnectionLost = onConnectLoss;
+
+        var options = {
+            onSuccess:onConnect,
+            hosts:server_uri,
+            uris:server_uri,
+            ports:port,
+            reconnect:true,
+        }
+
+        client.connect(options);
+
+
+        function onConnectLoss(){
+            console.log("Connection lost... Reconnecting");
+        }
+
+        function onConnect() {
+            console.log("connected");
+            client.subscribe("sensors/suh");
+        }
+
+        function onMessageArrived(message) {
+            console.log("onMessageArrived:"+message.payloadString);
+            document.getElementById("p1").innerHTML = message.payloadString;
+            var result = message.payloadString.split('#')
+            document.getElementById("p2").innerHTML = result;
+            a.lat = parseFloat(result[0]);
+            a.lng = parseFloat(result[1]);
+            placeMarkerAndPanTo(a, map);
+        }
+
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: {lat: -25.363882, lng: 131.044922 }
+        });
+
+        map.addListener('click', function(e) {
+            document.getElementById("demo").innerHTML = a.lat;
+            placeMarkerAndPanTo(e.latLng, map);
+        });
+    }
+    function placeMarkerAndPanTo(latLng, map){
+        var marker = new google.maps.Marker({
+            position: latLng,
+            map: map,
+            icon: iconBase
+        });
+        map.panTo(latLng);
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDgot_qwE8-dSfoVCPARs9psbDXdDrT7c&callback=initMap">
+</script>
+</body>
+</html>
