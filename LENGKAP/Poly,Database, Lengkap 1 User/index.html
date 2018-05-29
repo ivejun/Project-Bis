@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>Push button, send message</title>
+    <link href="default.css" rel="stylesheet" type="text/css">
+    <script src="paho-mqtt.js" type="text/javascript"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+</head>
+<body>
+
+<p id="p1"> Look Your Status Here Bro </p>
+<p id="p2"> another Print </p>
+
+<button onclick="toogleDriver()">Try it</button>
+
+
+<div id="map"></div>
+<div id="legend">
+    <h1>
+        <center>Driver Identity<center>
+    </h1>
+        <button class="btn" onclick="FindRealDriver()">Find Driver</button>
+</div>
+
+<div id="identifikasi">
+
+</div>
+
+<script src="main.js" type="text/javascript">
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDgot_qwE8-dSfoVCPARs9psbDXdDrT7c&callback=initMap">
+</script>
+</body>
+</html>

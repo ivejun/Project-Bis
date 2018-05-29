@@ -1,0 +1,63 @@
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+
+    #map {
+        height: 100%;
+    }
+
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Legend Utama Membentuk Kotak Putihnya*/
+    #legend {
+        box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
+        font-family: Arial, sans-serif;
+        background: #fff;
+        padding: 10px;
+        margin: 0px;
+    }
+
+    /* Legend Untuk Membentuk Shadow*/
+    #legend:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    #legend h3 {
+        margin-top: 10;
+    }
+
+    #legend img {
+        vertical-align: middle;
+    }
+
+    /* Legend Untuk Button FindDriver*/
+    #legend .btn {
+        position: absolute;
+        top: 105%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        background-color: #555;
+        color: white;
+        font-size: 18px;
+        padding: 10px 50px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    #legend .btn:hover {
+        background-color: #67808c;
+    }
+
+    #identifikasi {
+        box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
+        font-family: Arial, sans-serif;
+        background: #fff;
+        padding: 10px;
+        margin: 10px;
+    }
